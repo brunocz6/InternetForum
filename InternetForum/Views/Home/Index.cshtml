@@ -1,0 +1,42 @@
+﻿@model InternetForum.Models.HomeIndexViewModel
+
+@{
+	ViewData["Title"] = "Home Page";
+}
+
+
+<div class="row">
+	<div class="col-md-10 pull-left">
+		@foreach (var post in Model.Posts)
+		{
+			<div class="row">
+				<div class="col-sm-1">
+					<i class="fas fa-thumbs-up"></i>
+				</div>
+				<div class="col-sm-11">
+					<div class="card">
+						<h5 class="card-header">@post.Author.UserName | @post.CreatedAt</h5>
+						<div class="card-body">
+							<h5 class="card-title">@post.Title</h5>
+							<p class="card-text">@post.Body</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		}
+	</div>
+
+	<div class="col-md-2">
+		<div class="card" style="width: 18rem;">
+			<div class="card-header">
+				Oblíbená vlákna
+			</div>
+			<ul class="list-group list-group-flush">
+				@foreach (var thread in Model.MostSubscribedThreads)
+		{
+					<li class="list-group-item">@thread.Name | @thread.SubscribersCount</li>
+		}
+			</ul>
+		</div>
+	</div>
+</div>

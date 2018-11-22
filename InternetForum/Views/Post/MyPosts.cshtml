@@ -1,0 +1,51 @@
+﻿@model IEnumerable<InternetForum.Models.PostViewModel>
+@{
+	ViewData["Title"] = "MyPosts";
+}
+<div class="row">
+	<div class="col-sm-10">
+		<h2> Moje příspěvky </h2>
+	</div>
+	<div class="col-sm-2">
+		@Html.ActionLink("Přidat příspěvek", "Create", "Post", null, new { @class = "btn btn-outline-secondary float-right" })
+	</div>
+</div>
+
+<div>
+	@foreach (var post in Model)
+	{
+		<div class="card postPreview">
+			<div class="card-header">
+				@post.Author.UserName
+				<div class="float-right">
+					@Html.ActionLink("Upravit", "Edit", "Post", new { id = post.Id }, new { @class = "btn btn-outline-info pull-right" })
+					<a href="#" class="btn btn-small btn-outline-danger pull-right" onclick="deletePost(@post.Id)">Smazat</a>
+				</div>
+			</div>
+			<div class="card-body">
+				<h5 class="card-title">@post.Title</h5>
+				<p class="card-text">@post.Body</p>
+			</div>
+		</div>
+	}
+</div>
+
+<script type="text/javascript">
+
+	var deletePost = (postId) => {
+		if (confirm("Opravdu si přejete tento příspěvek smazat?")) {
+			$.post("/Post/Delete",
+				{ id: postId },
+				(returnedData) => {
+					window.location.reload();
+				}
+			);
+		}
+	}
+</script>
+
+<style type="text/css">
+	.postPreview{
+		margin-bottom: 10px;
+	}
+</style>
